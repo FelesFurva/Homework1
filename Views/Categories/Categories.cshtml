@@ -1,0 +1,18 @@
+﻿@using Homework1.Models
+@model List<CategoriesmModel>
+
+<table class="table">
+    <tr class="firstRow">
+        <th>ID</th>
+        <th>Name</th>
+        <th>View</th>
+    </tr>
+    @foreach(var category in Model)
+    {
+        <tr>
+            <td>@category.CategoryId</td>
+            <td>@category.CategoryName</td>
+            <td><a asp-area="" asp-contoller="Products" asp-controller="Products" asp-action="Find" asp-route-specific="@category.CategoryId">View</a></td>
+        </tr>
+    }
+</table>

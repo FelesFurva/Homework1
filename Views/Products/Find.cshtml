@@ -1,0 +1,25 @@
+﻿@using Homework1.Models
+@model List<ProductsModel>
+
+<p>How do I get the category name here!</p>
+<table class="table">
+    <tr class="firstRow">
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>View</th>
+    </tr>
+    @foreach(var product in Model)
+    {
+        <tr>
+            <td>@product.Name</td>
+            <td>@product.Description</td>
+            <td>@product.Price</td>
+            <td><a asp-area="" asp-contoller="Products" asp-controller="Products" asp-action="FindById" asp-route-specific="@product.Id">View</a></td>
+        </tr>
+    }
+    <tr>
+        <td><button><a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Categories"><i class="bi bi-arrow-left-square-fill"></i></a></button></td>
+    </tr>
+
+</table>
