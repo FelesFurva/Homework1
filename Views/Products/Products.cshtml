@@ -17,4 +17,10 @@
             <td><a asp-area="" asp-contoller="Products" asp-controller="Products" asp-action="FindById" asp-route-specific="@products.Id">View</a></td>
         </tr>
     }
+    <tr>
+        <td><button class="btn btn-dark btn-sm"><a class="nav-link text-white" asp-area="" asp-controller="Products" asp-action="Create">Add</a></button></td>
+    </tr>
+        <tr>
+        <td><button class="btn btn-dark btn-sm"><a class="nav-link text-white" asp-area="" asp-controller="Categories" asp-action="Categories">Back</a></button></td>
+    </tr>
 </table>

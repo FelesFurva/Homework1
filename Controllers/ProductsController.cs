@@ -69,6 +69,11 @@ namespace Homework1.Controllers
             return View(productsModels);
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         public IActionResult FindById(int specific)
         {
             ProductsModel model;
