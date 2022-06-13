@@ -6,15 +6,16 @@
         <th>ID</th>
         <th>Name</th>
         <th>View</th>
+        <th>More Info</th>
     </tr>
 
-    @foreach(var products in Model.OrderByDescending(product => product.Price))
+    @foreach(var products in Model@*.OrderByDescending(product => product.Price)*@)
     {
         <tr>
             <td>@products.Name</td>
             <td>@products.Description</td>
             <td>@products.Price</td>
-            <td><a asp-area="" asp-contoller="Products" asp-controller="Products" asp-action="FindById" asp-route-specific="@products.Id">View</a></td>
+            <td><a asp-area="" asp-contoller="Products" asp-controller="Products" asp-action="FindById" asp-route-specific="@products.Id">More info</a></td>
         </tr>
     }
     <tr>
