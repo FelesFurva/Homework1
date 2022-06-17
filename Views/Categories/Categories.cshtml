@@ -1,5 +1,5 @@
 ﻿@using Homework1.Models
-@model List<CategoriesmModel>
+@model IEnumerable<CategoryModel>
 
 <table class="table">
     <tr class="firstRow">
@@ -12,7 +12,10 @@
         <tr>
             <td>@category.CategoryId</td>
             <td>@category.CategoryName</td>
-            <td><a asp-area="" asp-contoller="Products" asp-controller="Products" asp-action="Find" asp-route-specific="@category.CategoryId">View</a></td>
+            <td><a asp-area="" asp-contoller="Categories" asp-controller="Categories" asp-action="FindByCategory" asp-route-specific="@category.CategoryId">View</a></td>
         </tr>
     }
+    <tr>
+        <td><a class="btn btn-dark btn-sm" asp-area="" asp-controller="Categories" asp-action="CreateCategory">Add</a></td>
+    </tr>
 </table>

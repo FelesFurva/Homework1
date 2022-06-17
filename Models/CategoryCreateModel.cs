@@ -1,9 +1,7 @@
 ﻿namespace Homework1.Models
 {
-    public class CategoriesmModel
+    public class CategoryCreateModel
     {
-        public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-
     }
 }

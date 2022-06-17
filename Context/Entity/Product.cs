@@ -1,13 +1,14 @@
-﻿namespace Homework1.Models
+﻿
+namespace Homework1.Context.Entity
 {
-    public class ProductsModel
+    public class Product
     {
         public int ProductId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }
-        public int CategoryID { get; set; }
         public string Location { get; set; }
-
+        public int CategoryID { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

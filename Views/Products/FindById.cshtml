@@ -1,4 +1,5 @@
-﻿@model ProductsModel
+﻿@using Homework1.Models
+@model ProductsModel
 
 <table class="table">
     <tr class="firstRow">
@@ -9,13 +10,13 @@
         <th>Location</th>
     </tr>
     <tr>
-        <td>@Model.Id</td>
+        <td>@Model.ProductId</td>
         <td>@Model.Name</td>
         <td>@Model.Description</td>
         <td>@Model.Price</td>
         <th>@Model.Location</th>
     </tr>
     <tr>
-        <td><button class="btn btn-dark"><a class="nav-link text-white" asp-area="" asp-controller="Categories" asp-action="Categories">Back</a></button></td>
+        <td><a class="btn btn-dark" asp-area="" asp-controller="Categories" asp-action="Categories">Back</a></td>
     </tr>
 </table>

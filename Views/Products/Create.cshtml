@@ -1,11 +1,11 @@
-﻿@model Homework1.Models.ProductsModel
+﻿@model ProductsModel
+@inject DatabaseManager dbmanager
 
 <h4>Add Product</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-controller="Products" asp-action="Create" method="post">
-            @Html.HiddenFor(Model => Model.Id)
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -25,7 +25,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="CategoryID" class="control-label"></label>
-                <input asp-for="CategoryID" class="form-control" />
+                <select asp-for="CategoryID" class="form-control">
+                @foreach (var category in dbmanager.GetCategories())
+                    {
+                        <option value="@category.CategoryId">@category.CategoryName</option>
+                    }
+                </select>
                 <span asp-validation-for="CategoryID" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -34,7 +39,7 @@
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <p></p>
+                <br />
                 <input type="submit" value="Create" class="btn btn-dark" />
             </div>
         </form>
@@ -42,7 +47,8 @@
 </div>
 
 <div>
-    <a asp-action="Products">Back to Product List</a>
+    <br />
+    <a class="btn btn-dark" asp-action="Products">Back to Product List</a>
 </div>
 
 @section Scripts {
