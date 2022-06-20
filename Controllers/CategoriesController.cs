@@ -14,7 +14,7 @@ namespace Homework1.Controllers
 
         public IActionResult Categories()
         {
-            return View(databaseManager.GetCategories());
+            return View();
         }
 
         public IActionResult FindByCategory(int specific)
