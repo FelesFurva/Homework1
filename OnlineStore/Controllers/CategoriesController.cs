@@ -1,26 +1,43 @@
 ﻿using OnlineStore.Models;
 using Microsoft.AspNetCore.Mvc;
+using OnlineStoreServices.Managers;
 
 namespace OnlineStore.Controllers
 {
     public class CategoriesController : Controller
     {
-        private DatabaseManager databaseManager;
+        private CategoryManager categoryManager;
 
-        public CategoriesController(DatabaseManager databaseManager)
+        public CategoriesController(CategoryManager categoryManager)
         {
-            this.databaseManager = databaseManager;
+            this.categoryManager = categoryManager;
         }
 
         public IActionResult Categories()
         {
-            var categories = databaseManager.GetCategories();
-            return View(categories);
+            var categories = categoryManager.GetCategories();
+            var categoriesList = categories.Select(category => new CategoryModel{ 
+                CategoryId = category.CategoryId,
+                CategoryName = category.CategoryName
+            });
+            return View(categoriesList);
         }
 
         public IActionResult FindByCategory(int specific)
         {
-            var productsModelsbyCategory = databaseManager.GetItemsByCategorybyId(specific);
+            var productsbyCategory = categoryManager.GetItemsByCategorybyId(specific);
+            var productsModelsbyCategory = new CategoryModel { 
+            CategoryId = productsbyCategory.CategoryId,
+            Products = productsbyCategory.Products.Select(product => new ProductsModel
+            {
+                ProductId = product.ProductId,
+                Name = product.Name,
+                Location = product.Location,
+                Description = product.Description,
+                CategoryID = product.CategoryID,
+                Price = product.Price,
+            })
+            };
             return View(productsModelsbyCategory);
         }
 
@@ -38,7 +55,7 @@ namespace OnlineStore.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    databaseManager.AddCategoryDB(category.CategoryName);
+                    categoryManager.AddCategoryDB(category.CategoryName);
                     return RedirectToAction("Categories");
                 }
                 return View(category);

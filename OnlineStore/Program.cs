@@ -1,12 +1,14 @@
 using DataAccess.Context;
 using OnlineStore;
 using Microsoft.EntityFrameworkCore;
+using OnlineStoreServices.Managers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<DatabaseManager>();
+builder.Services.AddTransient<CategoryManager>();
+builder.Services.AddTransient<ProductManager>();
 builder.Services.AddDbContext<WebShopDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebShopDb"));

@@ -1,15 +1,17 @@
 ﻿using OnlineStore.Models;
 using Microsoft.AspNetCore.Mvc;
+using OnlineStoreServices.Managers;
+using DataAccess.Context.Entity;
 
 namespace OnlineStore.Controllers
 {
     public class ProductsController : Controller
     {
-        private DatabaseManager databaseManager;
+        private ProductManager productManager;
 
-        public ProductsController(DatabaseManager databaseManager)
+        public ProductsController(ProductManager productManager)
         {
-            this.databaseManager = databaseManager;
+            this.productManager = productManager;
         }
 
         [HttpGet]
@@ -26,7 +28,15 @@ namespace OnlineStore.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    databaseManager.AddProducttoDB(product);
+                    var newProduct = new Product
+                    {
+                        Name = product.Name,
+                        Description = product.Description,
+                        Price = product.Price,
+                        CategoryID = product.CategoryID,
+                        Location = product.Location
+                    };
+                    productManager.AddProducttoDB(newProduct);
                     return RedirectToAction("Products");
                 }
                 return View(product);
@@ -39,12 +49,12 @@ namespace OnlineStore.Controllers
 
         public IActionResult Products()
         {
-            return View(databaseManager.GetProducts());
+            return View(productManager.GetProducts());
         }
 
         public IActionResult FindById(int specific)
         {
-            var model = databaseManager.GetProductsByID(specific);
+            var model = productManager.GetProductsByID(specific);
             if(model == null)
             {
                 return RedirectToAction("Products");

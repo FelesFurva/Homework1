@@ -1,34 +1,49 @@
 ﻿using OnlineStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using OnlineStoreServices.Managers;
+using DataAccess.Context.Entity;
 
 namespace OnlineStore.Controllers
 {
     public class HomeController : Controller
     {
 
-        private DatabaseManager databaseManager;
+        private CategoryManager categoryManager;
+        private ProductManager productManager;
 
-        public HomeController(DatabaseManager databaseManager, ILogger<HomeController> logger)
+        public HomeController(CategoryManager categoryManager, ILogger<HomeController> logger, ProductManager productManager)
         {
-            this.databaseManager = databaseManager;
+            this.categoryManager = categoryManager;
             _logger = logger;
+            this.productManager = productManager;
         }
 
         private readonly ILogger<HomeController> _logger;
 
         public IActionResult Index(int? selectedCategory = 1)
-        {
-            IEnumerable<CategoryModel> categories = databaseManager.GetCategories();
-            IEnumerable<ProductsModel> products = databaseManager.GetProductsbyCategory(selectedCategory);
+        { 
+            IEnumerable<Category> categories = categoryManager.GetCategories();
+            IEnumerable<Product> products = productManager.GetProductsbyCategory(selectedCategory);
 
             var homeView = new HomeViewModel
             {
-                CategoriesList = categories,
-                Products = products,
+                CategoriesList = categories.Select(categories => new CategoryModel {
+                    CategoryId = categories.CategoryId,
+                    CategoryName = categories.CategoryName,
+                }),
+
+                Products = products.Select(products => new ProductsModel { 
+                    ProductId = products.ProductId,
+                    Price = products.Price,
+                    Name = products.Name,
+                    Description = products.Description,
+                    Location = products.Location,
+                    CategoryID = products.CategoryID
+                }),
             };
 
-            return View(homeView);
+            return View(homeView); 
         }
 
         public IActionResult Privacy()
