@@ -1,4 +1,5 @@
 ﻿using OnlineStore.Models;
+using OnlineStore.Extention;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStoreServices.Managers;
 
@@ -16,10 +17,7 @@ namespace OnlineStore.Controllers
         public IActionResult Categories()
         {
             var categories = categoryManager.GetCategories();
-            var categoriesList = categories.Select(category => new CategoryModel{ 
-                CategoryId = category.CategoryId,
-                CategoryName = category.CategoryName
-            });
+            var categoriesList = categories.Select(category => category.ToModel());
             return View(categoriesList);
         }
 
@@ -28,15 +26,7 @@ namespace OnlineStore.Controllers
             var productsbyCategory = categoryManager.GetItemsByCategorybyId(specific);
             var productsModelsbyCategory = new CategoryModel { 
             CategoryId = productsbyCategory.CategoryId,
-            Products = productsbyCategory.Products.Select(product => new ProductsModel
-            {
-                ProductId = product.ProductId,
-                Name = product.Name,
-                Location = product.Location,
-                Description = product.Description,
-                CategoryID = product.CategoryID,
-                Price = product.Price,
-            })
+            Products = productsbyCategory.Products.Select(product => product.ToProductModel())
             };
             return View(productsModelsbyCategory);
         }

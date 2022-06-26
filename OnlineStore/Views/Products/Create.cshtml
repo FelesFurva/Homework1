@@ -1,5 +1,4 @@
-﻿@model ProductsModel
-@inject OnlineStoreServices.Managers.CategoryManager dbmanager
+﻿@model ProductCreateViewModel
 
 <h4>Add Product</h4>
 <hr />
@@ -26,7 +25,7 @@
             <div class="form-group">
                 <label asp-for="CategoryID" class="control-label"></label>
                 <select asp-for="CategoryID" class="form-control">
-                @foreach (var category in dbmanager.GetCategories())
+                @foreach (var category in Model.Categories)
                     {
                         <option value="@category.CategoryId">@category.CategoryName</option>
                     }
