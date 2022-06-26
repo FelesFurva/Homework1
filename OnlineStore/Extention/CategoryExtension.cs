@@ -10,7 +10,8 @@ namespace OnlineStore.Extention
             return new CategoryModel
             {
                 CategoryId = category.CategoryId,
-                CategoryName = category.CategoryName
+                CategoryName = category.CategoryName,
+                Products = category.Products?.Select(product => product.ToProductModel())
             };
         }
     }

@@ -7,28 +7,24 @@ namespace OnlineStore.Controllers
 {
     public class CategoriesController : Controller
     {
-        private CategoryManager categoryManager;
+        private readonly ICategoryManager _categoryManager;
 
-        public CategoriesController(CategoryManager categoryManager)
+        public CategoriesController(ICategoryManager categoryManager)
         {
-            this.categoryManager = categoryManager;
+            _categoryManager = categoryManager;
         }
 
         public IActionResult Categories()
         {
-            var categories = categoryManager.GetCategories();
+            var categories = _categoryManager.GetCategories();
             var categoriesList = categories.Select(category => category.ToModel());
             return View(categoriesList);
         }
 
         public IActionResult FindByCategory(int specific)
         {
-            var productsbyCategory = categoryManager.GetItemsByCategorybyId(specific);
-            var productsModelsbyCategory = new CategoryModel { 
-            CategoryId = productsbyCategory.CategoryId,
-            Products = productsbyCategory.Products.Select(product => product.ToProductModel())
-            };
-            return View(productsModelsbyCategory);
+            var productsbyCategory = _categoryManager.GetItemsByCategorybyId(specific).ToModel();
+            return View(productsbyCategory);
         }
 
         [HttpGet]
@@ -45,7 +41,7 @@ namespace OnlineStore.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    categoryManager.AddCategoryDB(category.CategoryName);
+                    _categoryManager.AddCategoryDB(category.CategoryName);
                     return RedirectToAction("Categories");
                 }
                 return View(category);

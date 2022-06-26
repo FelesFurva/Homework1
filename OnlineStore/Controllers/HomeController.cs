@@ -3,44 +3,35 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using OnlineStoreServices.Managers;
 using DataAccess.Context.Entity;
+using OnlineStore.Extention;
 
 namespace OnlineStore.Controllers
 {
     public class HomeController : Controller
     {
 
-        private CategoryManager categoryManager;
-        private ProductManager productManager;
+        private readonly ICategoryManager _categoryManager;
+        private IProductManager _productManager;
 
-        public HomeController(CategoryManager categoryManager, ILogger<HomeController> logger, ProductManager productManager)
+        public HomeController(ICategoryManager categoryManager, ILogger<HomeController> logger, IProductManager productManager)
         {
-            this.categoryManager = categoryManager;
+            _categoryManager = categoryManager;
             _logger = logger;
-            this.productManager = productManager;
+            _productManager = productManager;
         }
 
         private readonly ILogger<HomeController> _logger;
 
         public IActionResult Index(int? selectedCategory = 1)
         { 
-            IEnumerable<Category> categories = categoryManager.GetCategories();
-            IEnumerable<Product> products = productManager.GetProductsbyCategory(selectedCategory);
+            IEnumerable<Category> categories = _categoryManager.GetCategories();
+            IEnumerable<Product> products = _productManager.GetProductsbyCategory(selectedCategory);
 
             var homeView = new HomeViewModel
             {
-                CategoriesList = categories.Select(categories => new CategoryModel {
-                    CategoryId = categories.CategoryId,
-                    CategoryName = categories.CategoryName,
-                }),
+                CategoriesList = categories.Select(categories => categories.ToModel()),
 
-                Products = products.Select(products => new ProductsModel { 
-                    ProductId = products.ProductId,
-                    Price = products.Price,
-                    Name = products.Name,
-                    Description = products.Description,
-                    Location = products.Location,
-                    CategoryID = products.CategoryID
-                }),
+                Products = products.Select(products => products.ToProductModel()),
             };
 
             return View(homeView); 

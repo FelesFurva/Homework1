@@ -8,20 +8,20 @@ namespace OnlineStore.Controllers
 {
     public class ProductsController : Controller
     {
-        private ProductManager productManager;
-        private CategoryManager categoryManager;
+        private IProductManager _productManager;
+        private readonly ICategoryManager _categoryManager;
 
-        public ProductsController(ProductManager productManager, CategoryManager categoryManager)
+        public ProductsController(IProductManager productManager, ICategoryManager categoryManager)
         {
-            this.productManager = productManager;
-            this.categoryManager = categoryManager;
+            _productManager = productManager;
+            _categoryManager = categoryManager;
         }
 
         [HttpGet]
         public IActionResult Create()
         {
             var product = new ProductCreateViewModel();
-            product.Categories = categoryManager.GetCategories().Select(category => category.ToModel());
+            product.Categories = _categoryManager.GetCategories().Select(category => category.ToModel());
             return View(product);
         }
 
@@ -40,7 +40,7 @@ namespace OnlineStore.Controllers
                         CategoryID = product.CategoryID,
                         Location = product.Location
                     };
-                    productManager.AddProducttoDB(newProduct);
+                    _productManager.AddProducttoDB(newProduct);
                     return RedirectToAction("Products");
                 }
                 return View(product);
@@ -53,7 +53,7 @@ namespace OnlineStore.Controllers
 
         public IActionResult Products()
         {
-            var products = productManager.GetProducts();
+            var products = _productManager.GetProducts();
             var productList = products.Select(product => product.ToProductModel());
                         
             return View(productList);
@@ -61,7 +61,7 @@ namespace OnlineStore.Controllers
 
         public IActionResult FindById(int specific)
         {
-            var model = productManager.GetProductsByID(specific);
+            var model = _productManager.GetProductsByID(specific);
             var productModel = model.ToProductModel();
             if (productModel == null)
             {

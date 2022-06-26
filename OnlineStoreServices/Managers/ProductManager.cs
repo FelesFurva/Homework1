@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace OnlineStoreServices.Managers
 {
-    public class ProductManager
+    public class ProductManager : IProductManager
     {
         private readonly WebShopDBContext webShopDB;
 
