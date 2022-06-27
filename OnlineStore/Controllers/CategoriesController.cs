@@ -37,19 +37,12 @@ namespace OnlineStore.Controllers
         [HttpPost]
         public IActionResult CreateCategory(CategoryCreateModel category)
         {
-            try
-            {
                 if (ModelState.IsValid)
                 {
                     _categoryManager.AddCategoryDB(category.CategoryName);
                     return RedirectToAction("Categories");
                 }
                 return View(category);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
     }
 }
