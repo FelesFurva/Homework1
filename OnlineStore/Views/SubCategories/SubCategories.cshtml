@@ -1,23 +1,21 @@
 ﻿@using OnlineStore.Models
-@model CategoryModel
+@model IEnumerable<SubCategoryModel>
 
-<div><h1>@Model.CategoryName</h1></div>
 <table class="table">
     <tr class="firstRow">
+        <th>ID</th>
         <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
         <th>View</th>
     </tr>
-    @foreach(var subCategory in Model.SubCategories)
+    @foreach(var subCategory in Model)
     {
         <tr>
+            <td>@subCategory.SubCategoryId</td>
             <td>@subCategory.SubCategoryName</td>
             <td><a asp-area="" asp-contoller="SubCategories" asp-controller="SubCategories" asp-action="FindBySubCategory" asp-route-specific="@subCategory.SubCategoryId">View</a></td>
         </tr>
     }
     <tr>
-        <td><button class="btn btn-dark"><a class="nav-link text-white" asp-area="" asp-controller="Categories" asp-action="Categories">Back</a></button></td>
+        <td><a class="btn btn-dark btn-sm" asp-area="" asp-controller="SubCategories" asp-action="CreateSubCategory">Add</a></td>
     </tr>
-
 </table>

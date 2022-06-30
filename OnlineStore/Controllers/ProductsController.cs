@@ -9,46 +9,39 @@ namespace OnlineStore.Controllers
     public class ProductsController : Controller
     {
         private IProductManager _productManager;
-        private readonly ICategoryManager _categoryManager;
+        private readonly ISubCategoryManager _subCategoryManager;
 
-        public ProductsController(IProductManager productManager, ICategoryManager categoryManager)
+        public ProductsController(IProductManager productManager, ISubCategoryManager subCategoryManager)
         {
             _productManager = productManager;
-            _categoryManager = categoryManager;
+            _subCategoryManager = subCategoryManager;
         }
 
         [HttpGet]
         public IActionResult Create()
         {
             var product = new ProductCreateViewModel();
-            product.Categories = _categoryManager.GetCategories().Select(category => category.ToModel());
+            product.SubCategories = _subCategoryManager.GetSubCategories().Select(subCategory => subCategory.ToSubCategoryModel());
             return View(product);
         }
 
         [HttpPost]
         public IActionResult Create(ProductCreateModel product)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                var newProduct = new Product
                 {
-                    var newProduct = new Product
-                    {
-                        Name = product.Name,
-                        Description = product.Description,
-                        Price = product.Price,
-                        CategoryID = product.CategoryID,
-                        Location = product.Location
-                    };
-                    _productManager.AddProducttoDB(newProduct);
-                    return RedirectToAction("Products");
-                }
-                return View(product);
+                    Name = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    SubCategoryID = product.SubCategoryID,
+                    Location = product.Location
+                };
+                _productManager.AddProducttoDB(newProduct);
+                return RedirectToAction("Products");
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return BadRequest("Invalid Product Model"); ;
         }
 
         public IActionResult Products()

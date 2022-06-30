@@ -4,6 +4,5 @@
     {
         public IEnumerable<CategoryModel> CategoriesList { get; set; }
         public IEnumerable<ProductsModel> Products { get; set; }
-
     }
 }

@@ -6,6 +6,7 @@ namespace OnlineStoreServices.Managers
     {
         public IEnumerable<Category> GetCategories();
         public void AddCategoryDB(string CategoryName);
-        public Category GetItemsByCategorybyId(int id);
+        public Category GetSubCategoryByCategoryId(int id);
+        public IEnumerable<Category> GetCategoriesWithSubs();
     }
 }

@@ -11,7 +11,7 @@ namespace OnlineStore.Extention
             {
                 CategoryId = category.CategoryId,
                 CategoryName = category.CategoryName,
-                Products = category.Products?.Select(product => product.ToProductModel())
+                SubCategories = category.SubCategory?.Select(subCategory => subCategory.ToSubCategoryModel())
             };
         }
     }

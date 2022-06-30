@@ -4,6 +4,6 @@
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public IEnumerable<ProductsModel> Products { get; set; }
+        public IEnumerable<SubCategoryModel> SubCategories { get; set; }
     }
 }

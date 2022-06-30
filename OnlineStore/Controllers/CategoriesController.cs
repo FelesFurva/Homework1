@@ -23,8 +23,8 @@ namespace OnlineStore.Controllers
 
         public IActionResult FindByCategory(int specific)
         {
-            var productsbyCategory = _categoryManager.GetItemsByCategorybyId(specific).ToModel();
-            return View(productsbyCategory);
+            var subCategoriesbyCategory = _categoryManager.GetSubCategoryByCategoryId(specific).ToModel();
+            return View(subCategoriesbyCategory);
         }
 
         [HttpGet]

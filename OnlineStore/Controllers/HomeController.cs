@@ -12,20 +12,23 @@ namespace OnlineStore.Controllers
 
         private readonly ICategoryManager _categoryManager;
         private IProductManager _productManager;
+        private readonly ISubCategoryManager _subCategoryManager;
 
-        public HomeController(ICategoryManager categoryManager, ILogger<HomeController> logger, IProductManager productManager)
+        public HomeController(ICategoryManager categoryManager, ILogger<HomeController> logger, IProductManager productManager, ISubCategoryManager subCategoryManager)
         {
             _categoryManager = categoryManager;
             _logger = logger;
             _productManager = productManager;
+            _subCategoryManager = subCategoryManager;
         }
 
         private readonly ILogger<HomeController> _logger;
 
-        public IActionResult Index(int? selectedCategory = 1)
+        public IActionResult Index(int selectedSubCategory = 1)
         { 
-            IEnumerable<Category> categories = _categoryManager.GetCategories();
-            IEnumerable<Product> products = _productManager.GetProductsbyCategory(selectedCategory);
+            IEnumerable<Category> categories = _categoryManager.GetCategoriesWithSubs();
+            IEnumerable<Product> products = _productManager.GetProductsbySubCategory(selectedSubCategory);
+            //IEnumerable<SubCategory> subCategories = _subCategoryManager.GetSubCategoriesbyCategory(selectedCategory);
 
             var homeView = new HomeViewModel
             {
@@ -33,8 +36,7 @@ namespace OnlineStore.Controllers
 
                 Products = products.Select(products => products.ToProductModel()),
             };
-
-            return View(homeView); 
+           return View(homeView); 
         }
 
         public IActionResult Privacy()

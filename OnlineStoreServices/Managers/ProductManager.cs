@@ -19,12 +19,12 @@ namespace OnlineStoreServices.Managers
             return products;
         }
 
-        public IEnumerable<Product> GetProductsbyCategory(int? categoryId)
+        public IEnumerable<Product> GetProductsbySubCategory(int subCategoryId)
         {
-            var ProductsByCategoryId = webShopDB.Categories
-                                          .Include(c => c.Products)
-                                          .Where(c => c.CategoryId == categoryId).SelectMany(c => c.Products);
-            return ProductsByCategoryId;
+            var ProductsBySubCategoryId = webShopDB.SubCategories
+                                          .Include(sc => sc.Products)
+                                          .Where(sc => sc.SubCategoryId == subCategoryId).SelectMany(sc => sc.Products);
+            return ProductsBySubCategoryId.ToList();
         }
 
         public Product GetProductsByID(int id)

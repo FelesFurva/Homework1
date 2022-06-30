@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<ICategoryManager, CategoryManager>();
 builder.Services.AddTransient<IProductManager, ProductManager>();
+builder.Services.AddTransient<ISubCategoryManager, SubCategoryManager>();
 builder.Services.AddDbContext<WebShopDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebShopDb"));

@@ -19,6 +19,12 @@ namespace OnlineStoreServices.Managers
             return categories;
         }
 
+        public IEnumerable<Category> GetCategoriesWithSubs()
+        {
+            var categories = webShopDB.Categories.Include(c => c.SubCategory);
+            return categories;            
+        }
+
         public void AddCategoryDB(string CategoryName)
         {
             var newCategory = new Category
@@ -30,10 +36,10 @@ namespace OnlineStoreServices.Managers
             webShopDB.SaveChanges();
         }
 
-        public Category GetItemsByCategorybyId(int id)
+        public Category GetSubCategoryByCategoryId(int id)
         {
             var SelectedCategory = webShopDB.Categories
-                                            .Include(c => c.Products)
+                                            .Include(c => c.SubCategory)
                                             .SingleOrDefault(c => c.CategoryId == id);
             return SelectedCategory;
         }

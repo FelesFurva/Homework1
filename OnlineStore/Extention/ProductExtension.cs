@@ -13,7 +13,7 @@ namespace OnlineStore.Extention
                 Name = product.Name,
                 Location = product.Location,
                 Description = product.Description,
-                CategoryID = product.CategoryID,
+                SubCategoryID = product.SubCategoryID,
                 Price = product.Price,
             };
         }
