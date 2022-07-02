@@ -12,6 +12,9 @@ namespace DataAccess.Context
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<SubCategory> SubCategories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Cart> Cart { get; set; }
+        public virtual DbSet<CartItem> CartItem { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

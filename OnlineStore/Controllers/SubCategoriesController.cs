@@ -35,17 +35,20 @@ namespace OnlineStore.Controllers
         [HttpPost]
         public IActionResult CreateSubCategory(SubCategoryCreateModel subCategory)
         {
-                if (ModelState.IsValid)
+            var viewModel = new SubCategoryViewModel();
+            viewModel.Categories = _categoryManager.GetCategories().Select(category => category.ToModel());
+            
+            if (ModelState.IsValid)
+            {
+                var newSubCategory = new SubCategory
                 {
-                    var newSubCategory = new SubCategory
-                    {
-                        SubCategoryName = subCategory.SubCategoryName,
-                        CategoryId = subCategory.CategoryId
-                    };
-                    _subCategoryManager.AddSubCategoryDB(newSubCategory);
-                    return RedirectToAction("SubCategories");
-                }
-                return BadRequest("Invalid SubCatefory Model");
+                    SubCategoryName = subCategory.SubCategoryName,
+                    CategoryId = subCategory.CategoryId
+                };
+                _subCategoryManager.AddSubCategoryDB(newSubCategory);
+                return RedirectToAction("SubCategories");
+            }
+            return View(viewModel);
         }
 
         public IActionResult FindBySubCategory(int specific)

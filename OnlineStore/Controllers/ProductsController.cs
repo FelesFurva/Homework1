@@ -28,6 +28,9 @@ namespace OnlineStore.Controllers
         [HttpPost]
         public IActionResult Create(ProductCreateModel product)
         {
+            var viewModel = new ProductCreateViewModel();
+            viewModel.SubCategories = _subCategoryManager.GetSubCategories().Select(subCategory => subCategory.ToSubCategoryModel());
+            
             if (ModelState.IsValid)
             {
                 var newProduct = new Product
@@ -41,7 +44,7 @@ namespace OnlineStore.Controllers
                 _productManager.AddProducttoDB(newProduct);
                 return RedirectToAction("Products");
             }
-            return BadRequest("Invalid Product Model"); ;
+            return View(viewModel);
         }
 
         public IActionResult Products()

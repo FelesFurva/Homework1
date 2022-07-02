@@ -28,7 +28,6 @@ namespace OnlineStore.Controllers
         { 
             IEnumerable<Category> categories = _categoryManager.GetCategoriesWithSubs();
             IEnumerable<Product> products = _productManager.GetProductsbySubCategory(selectedSubCategory);
-            //IEnumerable<SubCategory> subCategories = _subCategoryManager.GetSubCategoriesbyCategory(selectedCategory);
 
             var homeView = new HomeViewModel
             {

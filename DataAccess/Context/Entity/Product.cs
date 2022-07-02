@@ -9,5 +9,6 @@
         public string Location { get; set; }
         public int SubCategoryID { get; set; }
         public virtual SubCategory SubCategory { get; set; }
+        public IEnumerable<CartItem> CartItems { get; set; }
     }
 }

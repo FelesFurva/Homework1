@@ -31,6 +31,20 @@
                         </li>
                     </ul>
                 </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                    @if(Context.Session.GetString("name") != null)
+                    {
+                        <li><a class="nav-link text-dark">Hello, @Context.Session.GetString("name")!</a></li>
+                        <li><a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="ViewCart">My cart</a></li>
+                    }
+                    else
+                    {
+                        <li><a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="CreateUser">Sign up</a></li>
+                        <li><a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="LoginUser">Sign in</a></li>
+                    }
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
