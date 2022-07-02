@@ -15,7 +15,16 @@ namespace OnlineStoreServices.Managers
         public void AddUserToDB(User newUser)
         {
             newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
+
             _webShopDB.User.Add(newUser);
+            _webShopDB.SaveChanges();
+
+            var cart = new Cart
+            {
+                UserId = newUser.UserId,
+            };
+
+            _webShopDB.Cart.Add(cart);
             _webShopDB.SaveChanges();
         }
 

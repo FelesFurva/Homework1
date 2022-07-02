@@ -17,6 +17,7 @@ builder.Services.AddTransient<ICategoryManager, CategoryManager>();
 builder.Services.AddTransient<IProductManager, ProductManager>();
 builder.Services.AddTransient<ISubCategoryManager, SubCategoryManager>();
 builder.Services.AddScoped<IUserManager, UserManager>();
+builder.Services.AddTransient<ICartManager, CartManager>();
 builder.Services.AddDbContext<WebShopDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebShopDb"));

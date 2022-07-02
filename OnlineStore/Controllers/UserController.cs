@@ -1,5 +1,4 @@
-﻿using DataAccess.Context.Entity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Extention;
 using OnlineStore.Models;
 using OnlineStoreServices.Managers;
@@ -67,6 +66,14 @@ namespace OnlineStore.Controllers
                 HttpContext.SetSession(user);
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult LogoutUser()
+        {
+            HttpContext.Session.Clear();
+            var user = new UserLoginModel();
+            return RedirectToAction("LoginUser");
         }
     }
 }

@@ -6,22 +6,22 @@ namespace OnlineStoreServices.Managers
 {
     public class CategoryManager : ICategoryManager
     {
-        private readonly WebShopDBContext webShopDB;
+        private readonly WebShopDBContext _webShopDB;
 
         public CategoryManager(WebShopDBContext webShopDB)
         {
-            this.webShopDB = webShopDB;
+            _webShopDB = webShopDB;
         }
 
         public IEnumerable<Category> GetCategories()
         {
-            var categories = webShopDB.Categories;
+            var categories = _webShopDB.Categories;
             return categories;
         }
 
         public IEnumerable<Category> GetCategoriesWithSubs()
         {
-            var categories = webShopDB.Categories.Include(c => c.SubCategory);
+            var categories = _webShopDB.Categories.Include(c => c.SubCategory);
             return categories;            
         }
 
@@ -32,13 +32,13 @@ namespace OnlineStoreServices.Managers
                 CategoryName = CategoryName,
             };
 
-            webShopDB.Categories.Add(newCategory);
-            webShopDB.SaveChanges();
+            _webShopDB.Categories.Add(newCategory);
+            _webShopDB.SaveChanges();
         }
 
         public Category GetSubCategoryByCategoryId(int id)
         {
-            var SelectedCategory = webShopDB.Categories
+            var SelectedCategory = _webShopDB.Categories
                                             .Include(c => c.SubCategory)
                                             .SingleOrDefault(c => c.CategoryId == id);
             return SelectedCategory;

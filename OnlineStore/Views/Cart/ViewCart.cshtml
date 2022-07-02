@@ -1,5 +1,30 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model CartViewModel
+
+<div><h1>Shopping Cart</h1></div>
+
+<table class="table">
+    <tr class="firstRow">
+        <th>Name</th>
+        <th>Price</th>
+        <th>View</th>
+    </tr>
+    @if(Model.Items?.Count() > 0)
+    {
+        @foreach(var cartItem in Model.Items)
+        {
+            <tr>
+                <td>@cartItem.Product.Name</td>
+                <td>@cartItem.Product.Price</td>
+                <td>@cartItem.Quantity</td>
+                <td>@cartItem.ProductTotal</td>
+            </tr>
+        }
+    }
+    <tr>
+        <td>Order total sum: @Model.OrderTotal</td>
+    </tr>
+    <tr>
+        <td><button class="btn btn-dark"><a class="nav-link text-white" asp-area="" asp-controller="Categories" asp-action="Categories">Back</a></button></td>
+    </tr>
+
+</table>

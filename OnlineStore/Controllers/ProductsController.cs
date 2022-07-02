@@ -8,7 +8,7 @@ namespace OnlineStore.Controllers
 {
     public class ProductsController : Controller
     {
-        private IProductManager _productManager;
+        private readonly IProductManager _productManager;
         private readonly ISubCategoryManager _subCategoryManager;
 
         public ProductsController(IProductManager productManager, ISubCategoryManager subCategoryManager)
