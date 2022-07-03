@@ -51,8 +51,13 @@ namespace OnlineStore.Controllers
 
         public IActionResult AddToCart(int product)
         {
-            _cartManager.AddCartItem(HttpContext.Session.GetInt32("id").Value, product);
-            return RedirectToAction("Index");
+            var UserId = HttpContext.Session.GetInt32("id");
+            if (UserId.HasValue)
+            {
+                _cartManager.AddCartItem(UserId.Value, product);
+                return RedirectToAction("Index");
+            }
+            return BadRequest();
         }
     }
 }

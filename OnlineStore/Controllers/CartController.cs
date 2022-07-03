@@ -16,12 +16,15 @@ namespace OnlineStore.Controllers
 
         public IActionResult ViewCart()
         {
+            var UserId = HttpContext.Session.GetInt32("id");
             var cart = new CartViewModel();
-            cart.Items = _cartManager.GetCartItems(HttpContext.Session.GetInt32("id").Value).Select(i => i.ToItemModel());
-            return View(cart);
+            if (UserId.HasValue)
+            {
+                cart.Items = _cartManager.GetCartItems(UserId.Value).Select(i => i.ToItemModel());
+                return View(cart);
+            }
+            return BadRequest();
         }
-
-
     }
 }
 
