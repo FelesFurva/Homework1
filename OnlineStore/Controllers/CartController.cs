@@ -14,10 +14,10 @@ namespace OnlineStore.Controllers
             _cartManager = cartManager;
         }
 
-        public IActionResult ViewCart(int specific)
+        public IActionResult ViewCart()
         {
             var cart = new CartViewModel();
-            cart.Items = _cartManager.GetCartItems(specific).Select(i => i.ToItemModel());
+            cart.Items = _cartManager.GetCartItems(HttpContext.Session.GetInt32("id").Value).Select(i => i.ToItemModel());
             return View(cart);
         }
 

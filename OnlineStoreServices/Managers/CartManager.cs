@@ -13,12 +13,6 @@ namespace OnlineStoreServices.Managers
             _webShopDB = webShopDB;
         }
 
-        public Cart GetCart(int userId)
-        {
-            var cart = _webShopDB.Cart.Include(c => c.Items).ThenInclude(i => i.Product).SingleOrDefault(c => c.UserId == userId);
-            return cart;
-        }
-
         public IEnumerable<CartItem> GetCartItems(int userId)
         {
             var cart = _webShopDB.Cart.Include(c => c.Items).ThenInclude(i => i.Product).SingleOrDefault(c => c.UserId == userId);
@@ -29,8 +23,7 @@ namespace OnlineStoreServices.Managers
         public void AddCartItem(int UserId, int ProductId)
         {
             var cart = _webShopDB.Cart.Include(c => c.Items).SingleOrDefault(c => c.UserId == UserId);
-            var cartItemList = cart.Items;
-            var cartItem = cartItemList.SingleOrDefault(i => i.ProductId == ProductId);
+            var cartItem = cart.Items.FirstOrDefault(i => i.ProductId == ProductId);
             if (cartItem == null)
             {
                 var newCartItem = new CartItem

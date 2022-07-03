@@ -1,5 +1,4 @@
 ﻿using DataAccess.Context.Entity;
-using OnlineStore.Models;
 
 namespace OnlineStore.Extention
 {

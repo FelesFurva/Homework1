@@ -36,7 +36,7 @@
                     @if(Context.Session.GetString("name") != null)
                     {
                         <li><a class="nav-link text-dark">Hello, @Context.Session.GetString("name")!</a></li>
-                        <li><a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="ViewCart" asp-route-specific=@Context.Session.GetInt32("id")>My cart</a></li>
+                        <li><a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="ViewCart">My cart</a></li>
                         <li><a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="LogoutUser">Sign out</a></li>
                     }
                     else

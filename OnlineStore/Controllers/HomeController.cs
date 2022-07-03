@@ -12,7 +12,6 @@ namespace OnlineStore.Controllers
 
         private readonly ICategoryManager _categoryManager;
         private readonly IProductManager _productManager;
-       // private readonly ISubCategoryManager _subCategoryManager;
         private readonly ICartManager _cartManager;
 
         public HomeController(ICategoryManager categoryManager, ILogger<HomeController> logger, IProductManager productManager, ICartManager cartManager)
@@ -21,7 +20,6 @@ namespace OnlineStore.Controllers
             _logger = logger;
             _productManager = productManager;
             _cartManager = cartManager;
-           // _subCategoryManager = subCategoryManager;
         }
 
         private readonly ILogger<HomeController> _logger;
@@ -51,9 +49,9 @@ namespace OnlineStore.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult AddToCart(int id, int product)
+        public IActionResult AddToCart(int product)
         {
-            _cartManager.AddCartItem(id, product);
+            _cartManager.AddCartItem(HttpContext.Session.GetInt32("id").Value, product);
             return RedirectToAction("Index");
         }
     }
