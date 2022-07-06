@@ -8,5 +8,6 @@
         public int SubCategoryID { get; set; }
         public string Location { get; set; }
         public IEnumerable<SubCategoryModel> SubCategories { get; set; }
+        public string Filepath { get; set; }
     }
 }

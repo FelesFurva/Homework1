@@ -15,6 +15,7 @@ namespace OnlineStore.Extention
                 Description = product.Description,
                 SubCategoryID = product.SubCategoryID,
                 Price = product.Price,
+                Filepath = product.Filepath
             };
         }
     }

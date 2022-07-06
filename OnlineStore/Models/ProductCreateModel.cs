@@ -7,5 +7,7 @@
         public double Price { get; set; }
         public int SubCategoryID { get; set; }
         public string Location { get; set; }
+        public string Filepath { get; set; }
+        public IFormFile Image { get; set; }
     }
 }

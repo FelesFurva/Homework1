@@ -4,6 +4,7 @@ using DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(WebShopDBContext))]
-    partial class WebShopDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220705171651_addedFilePathColum")]
+    partial class addedFilePathColum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,10 +117,6 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Filepath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -144,7 +142,6 @@ namespace DataAccess.Migrations
                         {
                             ProductId = 1,
                             Description = "They are yellow",
-                            Filepath = "~/Photo/Banana.jpg",
                             Location = "row 6",
                             Name = "Banana",
                             Price = 1.5900000000000001,
@@ -154,7 +151,6 @@ namespace DataAccess.Migrations
                         {
                             ProductId = 2,
                             Description = "They are green",
-                            Filepath = "~/Photo/Kiwi.jpg",
                             Location = "row 6",
                             Name = "Kiwi",
                             Price = 0.58999999999999997,
@@ -164,7 +160,6 @@ namespace DataAccess.Migrations
                         {
                             ProductId = 3,
                             Description = "Shh! We know ;)",
-                            Filepath = "~/Photo/Cake.jpg",
                             Location = "row 6",
                             Name = "Cake",
                             Price = 10.0,
@@ -174,7 +169,6 @@ namespace DataAccess.Migrations
                         {
                             ProductId = 4,
                             Description = "Life!",
-                            Filepath = "~/Photo/Potatoe.jpg",
                             Location = "row 4",
                             Name = "Potatoe",
                             Price = 0.48999999999999999,
@@ -184,7 +178,6 @@ namespace DataAccess.Migrations
                         {
                             ProductId = 5,
                             Description = "It's red",
-                            Filepath = "~/Photo/Paprika.jpg",
                             Location = "row 3",
                             Name = "Paprika",
                             Price = 1.5,
@@ -194,7 +187,6 @@ namespace DataAccess.Migrations
                         {
                             ProductId = 6,
                             Description = "No sugar",
-                            Filepath = "~/Photo/Pepsi.jpg",
                             Location = "row 2",
                             Name = "Pepsi",
                             Price = 0.79000000000000004,

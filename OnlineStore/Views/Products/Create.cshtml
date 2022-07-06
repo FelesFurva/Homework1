@@ -4,7 +4,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-controller="Products" asp-action="Create" method="post">
+        <form asp-controller="Products" asp-action="Create" method="post", enctype = "multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -37,6 +37,15 @@
                 <input asp-for="Location" class="form-control" />
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
+
+            <div class="mb-5">
+
+                <label asp-for="Filepath" for="Image" class="form-label"></label>
+                <input asp-for="Filepath" type="file" name="image" class="form-control" id="fromFile" onchange="preview()" class="btn btn-dark"/>
+                <br />
+                <button onclick="clearImage()" class="btn btn-dark">Add Image</button>
+            </div>
+            <img id="frame" src="" class="img-fluid" />
             <div class="form-group">
                 <br />
                 <input type="submit" value="Create" class="btn btn-dark" />
@@ -49,6 +58,16 @@
     <br />
     <a class="btn btn-dark" asp-action="Products">Back to Product List</a>
 </div>
+
+<script>
+    function preview() {
+        frame.src = URL.createObjectURL(event.target.files[0]);
+    }
+    function clearImage() {
+        document.getElementById('fromFile').value = null;
+        frame.src = ""
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -10,6 +10,7 @@ namespace OnlineStore.Controllers
     {
         private readonly IProductManager _productManager;
         private readonly ISubCategoryManager _subCategoryManager;
+        
 
         public ProductsController(IProductManager productManager, ISubCategoryManager subCategoryManager)
         {
@@ -30,17 +31,31 @@ namespace OnlineStore.Controllers
         {
             var viewModel = new ProductCreateViewModel();
             viewModel.SubCategories = _subCategoryManager.GetSubCategories().Select(subCategory => subCategory.ToSubCategoryModel());
-            
+
+            ModelState.Remove(nameof(product.Image));
+            ModelState.Remove(nameof(product.Filepath));
             if (ModelState.IsValid)
             {
+                string fileName = Path.GetFileName(product.Image.FileName);
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName;
+
+                string saveFolderName = "Photo";
+    
+                var filepath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", saveFolderName, fileName);
+                var filePathForDB = $"~/{saveFolderName}/{fileName}";
+
+                product.Image.CopyTo(new FileStream(filepath, FileMode.Create));
+
                 var newProduct = new Product
                 {
                     Name = product.Name,
                     Description = product.Description,
                     Price = product.Price,
                     SubCategoryID = product.SubCategoryID,
-                    Location = product.Location
+                    Location = product.Location,
+                    Filepath = filePathForDB,
                 };
+                
                 _productManager.AddProducttoDB(newProduct);
                 return RedirectToAction("Products");
             }

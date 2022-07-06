@@ -14,10 +14,6 @@ namespace OnlineStore.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult ViewUser()
-        {
-            return View();
-        }
         [HttpGet]
         public IActionResult CreateUser()
         {
@@ -63,7 +59,7 @@ namespace OnlineStore.Controllers
             }
             else
             {
-                HttpContext.SetSession(user);
+                HttpContext.Session.SetSession(user);
             }
             return RedirectToAction("Index", "Home");
         }
