@@ -1,7 +1,11 @@
 ﻿@model CartViewModel
 
 <div><h1>Shopping Cart</h1></div>
-
+<div class="container">
+    <div  class="topnav-right">
+        <a class="btn btn-dark" asp-area="" asp-controller="Order" asp-action="ViewOrderHistory">View Order History</a>
+    </div>
+</div>
 <table class="table">
     <tr class="firstRow">
         <th>Name</th>
@@ -31,13 +35,6 @@
     <div>        
         <div class="col align-self-start">
             <a class="btn btn-dark" asp-area="" asp-controller="Order" asp-action="PurchaseOrder">Purchase</a>
-        </div>
-    </div>
-    <br />
-    <br/>
-    <div>        
-        <div class="col align-self-start">
-            <a class="btn btn-dark" asp-area="" asp-controller="Order" asp-action="ViewOrderHistory">View Order History</a>
         </div>
     </div>
     <br />
