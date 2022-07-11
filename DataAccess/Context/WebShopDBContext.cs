@@ -15,6 +15,8 @@ namespace DataAccess.Context
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Cart> Cart { get; set; }
         public virtual DbSet<CartItem> CartItem { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<OrderItem> OrderItem { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -80,7 +82,7 @@ namespace DataAccess.Context
                         ProductId = 1,
                         Name = "Banana",
                         Description = "They are yellow",
-                        Price = 1.59,
+                        Price = 1.59m,
                         SubCategoryID = 3,
                         Filepath = "~/Photo/Banana.jpg",
                         Location = "row 6"
@@ -90,7 +92,7 @@ namespace DataAccess.Context
                         ProductId = 2,
                         Name = "Kiwi",
                         Description = "They are green",
-                        Price = 0.59,
+                        Price = 0.59m,
                         SubCategoryID = 4,
                         Filepath = "~/Photo/Kiwi.jpg",
                         Location = "row 6"
@@ -100,7 +102,7 @@ namespace DataAccess.Context
                         ProductId = 3,
                         Name = "Cake",
                         Description = "Shh! We know ;)",
-                        Price = 10.00,
+                        Price = 10.00m,
                         SubCategoryID = 4,
                         Filepath = "~/Photo/Cake.jpg",
                         Location = "row 6"
@@ -110,7 +112,7 @@ namespace DataAccess.Context
                         ProductId = 4,
                         Name = "Potatoe",
                         Description = "Life!",
-                        Price = 0.49,
+                        Price = 0.49m,
                         SubCategoryID = 1,
                         Filepath = "~/Photo/Potatoe.jpg",
                         Location = "row 4"
@@ -120,7 +122,7 @@ namespace DataAccess.Context
                         ProductId = 5,
                         Name = "Paprika",
                         Description = "It's red",
-                        Price = 1.50,
+                        Price = 1.50m,
                         SubCategoryID = 2,
                         Filepath = "~/Photo/Paprika.jpg",
                         Location = "row 3"
@@ -130,7 +132,7 @@ namespace DataAccess.Context
                         ProductId = 6,
                         Name = "Pepsi",
                         Description = "No sugar",
-                        Price = 0.79,
+                        Price = 0.79m,
                         SubCategoryID = 5,
                         Filepath = "~/Photo/Pepsi.jpg",
                         Location = "row 2"

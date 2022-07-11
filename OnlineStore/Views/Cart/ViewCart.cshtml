@@ -5,8 +5,9 @@
 <table class="table">
     <tr class="firstRow">
         <th>Name</th>
-        <th>Price</th>
-        <th>View</th>
+        <th>Price for 1 pc</th>
+        <th>Quantity</th>
+        <th>Total</th>
     </tr>
     @if(Model.Items?.Count() > 0)
     {
@@ -16,15 +17,33 @@
                 <td>@cartItem.Product.Name</td>
                 <td>@cartItem.Product.Price</td>
                 <td>@cartItem.Quantity</td>
-                <td>@cartItem.ProductTotal</td>
+                <td>@cartItem.ProductTotal.ToString("N2")</td>
             </tr>
         }
     }
-    <tr>
-        <td>Order total sum: @Model.OrderTotal</td>
-    </tr>
-    <tr>
-        <td><button class="btn btn-dark"><a class="nav-link text-white" asp-area="" asp-controller="Categories" asp-action="Categories">Back</a></button></td>
-    </tr>
+        <tr>
+            <td colspan="3"><h5 style="text-align:right"> Order total sum:</h5></td>
+            <td>@Model.OrderTotal</td>
+        </tr>
+    </table>
 
-</table>
+<div class="container">
+    <div>        
+        <div class="col align-self-start">
+            <button class="btn btn-dark"><a class="nav-link text-white" asp-area="" asp-controller="Order" asp-action="PurchaseOrder">Purchase</a></button>
+        </div>
+    </div>
+    <br />
+    <br/>
+    <div>        
+        <div class="col align-self-start">
+            <button class="btn btn-dark"><a class="nav-link text-white" asp-area="" asp-controller="Order" asp-action="ViewOrderHistory">View Order History</a></button>
+        </div>
+    </div>
+    <br />
+    <div>        
+        <div class="col align-self-start">
+            <button class="btn btn-dark"><a class="nav-link text-white" asp-area="" asp-controller="Categories" asp-action="Categories">Back</a></button>
+        </div>
+    </div>
+</div>

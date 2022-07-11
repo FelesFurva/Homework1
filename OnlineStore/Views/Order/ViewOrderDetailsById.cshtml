@@ -1,0 +1,30 @@
+﻿@using OnlineStore.Models
+@model OrderViewModel
+
+<h1>Order Nr.: @Model.OrderId</h1>
+<hr />
+<h3>Order Date: @Model.CreatedDate</h3>
+<table class="table">
+    <tr class="firstRow">
+        <th>Name</th>
+        <th>Price</th>
+        <th>Amount</th>
+        <th>Sum</th>
+    </tr>
+    @foreach(var orderItem in Model.OrderedItems)
+    {
+        <tr>
+            <td>@orderItem.Product.Name</td>
+            <td>@orderItem.Price</td>
+            <td>@orderItem.Quantity</td>
+            <td>@orderItem.ProductTotal</td>
+        </tr>
+    }
+    <tr>
+        <td colspan="3"><h5 style="text-align:right"> Order total sum:</h5></td>
+        <td>@Model.OrderTotalSum</td>
+    </tr>
+    <tr>
+        <td><a class="btn btn-dark btn-sm" asp-area="" asp-controller="Cart" asp-action="ViewCart">Back to Cart</a></td>
+    </tr>
+</table>

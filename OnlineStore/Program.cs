@@ -13,11 +13,12 @@ builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession();
 
-builder.Services.AddTransient<ICategoryManager, CategoryManager>();
-builder.Services.AddTransient<IProductManager, ProductManager>();
-builder.Services.AddTransient<ISubCategoryManager, SubCategoryManager>();
+builder.Services.AddScoped<ICategoryManager, CategoryManager>();
+builder.Services.AddScoped<IProductManager, ProductManager>();
+builder.Services.AddScoped<ISubCategoryManager, SubCategoryManager>();
 builder.Services.AddScoped<IUserManager, UserManager>();
-builder.Services.AddTransient<ICartManager, CartManager>();
+builder.Services.AddScoped<ICartManager, CartManager>();
+builder.Services.AddScoped<IOrderManager, OrderManager > ();
 builder.Services.AddDbContext<WebShopDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebShopDb"));

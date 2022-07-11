@@ -1,0 +1,21 @@
+﻿@using OnlineStore.Models
+@model IEnumerable<OrderViewModel>
+
+<table class="table">
+    <tr class="firstRow">
+        <th>ID</th>
+        <th>Date</th>
+        <th>View order details</th>
+    </tr>
+    @foreach(var order in Model)
+    {
+        <tr>
+            <td>@order.OrderId</td>
+            <td>@order.CreatedDate</td>
+            <td><a asp-area="" asp-contoller="Categories" asp-controller="Order" asp-action="ViewOrderDetailsById" asp-route-specific="@order.OrderId">View</a></td>
+        </tr>
+    }
+    <tr>
+        <td><a class="btn btn-dark btn-sm" asp-area="" asp-controller="Cart" asp-action="ViewCart">Back to Cart</a></td>
+    </tr>
+</table>

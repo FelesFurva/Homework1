@@ -43,7 +43,6 @@
                 <label asp-for="Filepath" for="Image" class="form-label"></label>
                 <input asp-for="Filepath" type="file" name="image" class="form-control" id="fromFile" onchange="preview()" class="btn btn-dark"/>
                 <br />
-                <button onclick="clearImage()" class="btn btn-dark">Add Image</button>
             </div>
             <img id="frame" src="" class="img-fluid" />
             <div class="form-group">
@@ -62,10 +61,6 @@
 <script>
     function preview() {
         frame.src = URL.createObjectURL(event.target.files[0]);
-    }
-    function clearImage() {
-        document.getElementById('fromFile').value = null;
-        frame.src = ""
     }
 </script>
 

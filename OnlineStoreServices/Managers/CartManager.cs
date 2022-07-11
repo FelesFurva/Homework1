@@ -20,6 +20,12 @@ namespace OnlineStoreServices.Managers
             return cartItems;
         }
 
+        public Cart GetUserCart(int userId)
+        {
+            var cart = _webShopDB.Cart.Include(c => c.Items).ThenInclude(i => i.Product).SingleOrDefault(c => c.UserId == userId);
+            return cart;
+        }
+
         public void AddCartItem(int UserId, int ProductId)
         {
             var cart = _webShopDB.Cart.Include(c => c.Items).SingleOrDefault(c => c.UserId == UserId);
@@ -41,6 +47,13 @@ namespace OnlineStoreServices.Managers
                 cartItem.Quantity += 1;
                 _webShopDB.SaveChanges();
             }
+        }
+
+        public void ClearCart(int userId)
+        {
+            var toBeRemoved = GetCartItems(userId);
+            _webShopDB.CartItem.RemoveRange(toBeRemoved);
+            _webShopDB.SaveChanges();
         }
     }
 }

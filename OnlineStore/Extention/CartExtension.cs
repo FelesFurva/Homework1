@@ -11,6 +11,7 @@ namespace OnlineStore.Extention
             {
                 UserId = cart.UserId,
                 CartId = cart.CartId,
+                Items = cart.Items.ToModel(),
             };
             return cartModel;
         }

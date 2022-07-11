@@ -18,5 +18,24 @@ namespace OnlineStore.Extention
                 Filepath = product.Filepath
             };
         }
+
+        public static Product ToEntity(this ProductsModel productsModel)
+        {
+            return new Product
+            {
+                ProductId = productsModel.ProductId,
+                Name = productsModel.Name,
+                Location = productsModel.Location,
+                Description = productsModel.Description,
+                SubCategoryID = productsModel.SubCategoryID,
+                Price = productsModel.Price,
+                Filepath = productsModel.Filepath
+            };
+        }
+
+        public static IEnumerable<Product> ToEntity(this IEnumerable<ProductsModel> productsModels)
+        {
+            return productsModels.Select(p => p.ToEntity());
+        }
     }
 }

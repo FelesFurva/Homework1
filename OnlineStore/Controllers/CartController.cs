@@ -21,6 +21,13 @@ namespace OnlineStore.Controllers
             cart.Items = _cartManager.GetCartItems(UserId).Select(i => i.ToItemModel());
             return View(cart);
         }
+
+        public IActionResult AddToCart(int product)
+        {
+            var UserId = HttpContext.Session.GetId();
+            _cartManager.AddCartItem(UserId, product);
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
     }
 }
 

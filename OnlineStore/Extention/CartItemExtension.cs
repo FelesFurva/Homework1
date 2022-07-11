@@ -14,9 +14,14 @@ namespace OnlineStore.Extention
                 DateCreated = cartItem.DateCreated,
                 CartId = cartItem.CartId,
                 ProductId = cartItem.ProductId,
-                Product = cartItem.Product,
+                Product = cartItem.Product.ToProductModel(),
             };
             return cartItemModel;
+        }
+
+        public static IEnumerable<CartItemModel> ToModel (this IEnumerable<CartItem> cartItems)
+        {
+            return cartItems.Select(ci => ci.ToItemModel());
         }
     }
 }

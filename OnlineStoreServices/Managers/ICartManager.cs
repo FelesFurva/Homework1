@@ -6,5 +6,7 @@ namespace OnlineStoreServices.Managers
     {
         void AddCartItem(int UserId, int ProductId);
         IEnumerable<CartItem> GetCartItems(int userId);
+        Cart GetUserCart(int userId);
+        void ClearCart(int userId);
     }
 }
