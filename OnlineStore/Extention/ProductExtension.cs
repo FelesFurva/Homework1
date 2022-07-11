@@ -5,7 +5,7 @@ namespace OnlineStore.Extention
 {
     public static class ProductExtension
     {
-        public static ProductsModel ToProductModel(this Product product)
+        public static ProductsModel ToModel(this Product product)
         {
             return new ProductsModel
             {
@@ -31,6 +31,11 @@ namespace OnlineStore.Extention
                 Price = productsModel.Price,
                 Filepath = productsModel.Filepath
             };
+        }
+
+        public static IEnumerable<ProductsModel> ToModel(this IEnumerable<Product> productsModels)
+        {
+            return productsModels.Select(product => product.ToModel());
         }
 
         public static IEnumerable<Product> ToEntity(this IEnumerable<ProductsModel> productsModels)

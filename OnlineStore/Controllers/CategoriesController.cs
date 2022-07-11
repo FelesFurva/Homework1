@@ -16,9 +16,8 @@ namespace OnlineStore.Controllers
 
         public IActionResult Categories()
         {
-            var categories = _categoryManager.GetCategories();
-            var categoriesList = categories.Select(category => category.ToModel());
-            return View(categoriesList);
+            var categories = _categoryManager.GetCategories().ToModel();
+            return View(categories);
         }
 
         public IActionResult FindByCategory(int specific)

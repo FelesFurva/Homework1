@@ -1,6 +1,4 @@
-﻿using DataAccess.Context.Entity;
-
-namespace OnlineStore.Models
+﻿namespace OnlineStore.Models
 {
     public class OrderViewModel
     {

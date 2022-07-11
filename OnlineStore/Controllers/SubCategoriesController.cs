@@ -1,5 +1,4 @@
-﻿using DataAccess.Context.Entity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Extention;
 using OnlineStore.Models;
 using OnlineStoreServices.Managers;
@@ -19,16 +18,15 @@ namespace OnlineStore.Controllers
 
         public IActionResult SubCategories()
         {
-            var subCategories = _subCategoryManager.GetSubCategories();
-            var subCategoryList = subCategories.Select(subCategory => subCategory.ToSubCategoryModel());
-            return View(subCategoryList);
+            var subCategories = _subCategoryManager.GetSubCategories().ToModel();
+            return View(subCategories);
         }
 
         [HttpGet]
         public IActionResult CreateSubCategory()
         {
             var subCategory = new SubCategoryViewModel();
-            subCategory.Categories = _categoryManager.GetCategories().Select(category => category.ToModel());
+            subCategory.Categories = _categoryManager.GetCategories().ToModel();
             return View(subCategory);
         }
 
@@ -36,16 +34,16 @@ namespace OnlineStore.Controllers
         public IActionResult CreateSubCategory(SubCategoryCreateModel subCategory)
         {
             var viewModel = new SubCategoryViewModel();
-            viewModel.Categories = _categoryManager.GetCategories().Select(category => category.ToModel());
+            viewModel.Categories = _categoryManager.GetCategories().ToModel();
             
             if (ModelState.IsValid)
             {
-                var newSubCategory = new SubCategory
+                var newSubCategory = new SubCategoryModel
                 {
                     SubCategoryName = subCategory.SubCategoryName,
                     CategoryId = subCategory.CategoryId
                 };
-                _subCategoryManager.AddSubCategoryDB(newSubCategory);
+                _subCategoryManager.AddSubCategoryDB(newSubCategory.ToEntity());
                 return RedirectToAction("SubCategories");
             }
             return View(viewModel);
@@ -53,7 +51,7 @@ namespace OnlineStore.Controllers
 
         public IActionResult FindBySubCategory(int specific)
         {
-            var productsbyCategory = _subCategoryManager.GetItemsBySubCategoryId(specific).ToSubCategoryModel();
+            var productsbyCategory = _subCategoryManager.GetItemsBySubCategoryId(specific).ToModel();
             return View(productsbyCategory);
         }
     }

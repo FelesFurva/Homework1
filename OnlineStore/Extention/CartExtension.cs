@@ -15,5 +15,24 @@ namespace OnlineStore.Extention
             };
             return cartModel;
         }
+
+        public static CartItemModel ToItemModel(this CartItem cartItem)
+        {
+            var cartItemModel = new CartItemModel
+            {
+                CartItemId = cartItem.CartItemId,
+                Quantity = cartItem.Quantity,
+                DateCreated = cartItem.DateCreated,
+                CartId = cartItem.CartId,
+                ProductId = cartItem.ProductId,
+                Product = cartItem.Product.ToModel(),
+            };
+            return cartItemModel;
+        }
+
+        public static IEnumerable<CartItemModel> ToModel(this IEnumerable<CartItem> cartItems)
+        {
+            return cartItems.Select(ci => ci.ToItemModel());
+        }
     }
 }

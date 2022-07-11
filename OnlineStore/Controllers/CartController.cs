@@ -18,7 +18,7 @@ namespace OnlineStore.Controllers
         {
             var UserId = HttpContext.Session.GetId();
             var cart = new CartViewModel();
-            cart.Items = _cartManager.GetCartItems(UserId).Select(i => i.ToItemModel());
+            cart.Items = _cartManager.GetCartItems(UserId).ToModel();
             return View(cart);
         }
 

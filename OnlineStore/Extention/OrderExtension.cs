@@ -50,7 +50,7 @@ namespace OnlineStore.Extention
                 Price = orderItem.Price,
                 Quantity = orderItem.Quantity,
                 ProductId = orderItem.ProductId,
-                Product = orderItem.Product.ToProductModel(),
+                Product = orderItem.Product.ToModel(),
             };
             return orderItemModel;
         }

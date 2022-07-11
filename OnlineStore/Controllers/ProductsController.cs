@@ -2,7 +2,6 @@
 using OnlineStore.Extention;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStoreServices.Managers;
-using DataAccess.Context.Entity;
 
 namespace OnlineStore.Controllers
 {
@@ -21,16 +20,16 @@ namespace OnlineStore.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var product = new ProductCreateViewModel();
-            product.SubCategories = _subCategoryManager.GetSubCategories().Select(subCategory => subCategory.ToSubCategoryModel());
+            var product = new ProductViewModel();
+            product.SubCategories = _subCategoryManager.GetSubCategories().ToModel();
             return View(product);
         }
 
         [HttpPost]
         public IActionResult Create(ProductCreateModel product)
         {
-            var viewModel = new ProductCreateViewModel();
-            viewModel.SubCategories = _subCategoryManager.GetSubCategories().Select(subCategory => subCategory.ToSubCategoryModel());
+            var viewModel = new ProductViewModel();
+            viewModel.SubCategories = _subCategoryManager.GetSubCategories().ToModel();
 
             ModelState.Remove(nameof(product.Image));
             ModelState.Remove(nameof(product.Filepath));
@@ -41,12 +40,12 @@ namespace OnlineStore.Controllers
 
                 string saveFolderName = "Photo";
     
-                var filepath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", saveFolderName, fileName);
-                var filePathForDB = $"~/{saveFolderName}/{fileName}";
+                var filepath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", saveFolderName, uniqueFileName);
+                var filePathForDB = $"~/{saveFolderName}/{uniqueFileName}";
 
                 product.Image.CopyTo(new FileStream(filepath, FileMode.Create));
 
-                var newProduct = new Product
+                var newProduct = new ProductsModel
                 {
                     Name = product.Name,
                     Description = product.Description,
@@ -56,7 +55,7 @@ namespace OnlineStore.Controllers
                     Filepath = filePathForDB,
                 };
                 
-                _productManager.AddProducttoDB(newProduct);
+                _productManager.AddProducttoDB(newProduct.ToEntity());
                 return RedirectToAction("Products");
             }
             return View(viewModel);
@@ -64,16 +63,14 @@ namespace OnlineStore.Controllers
 
         public IActionResult Products()
         {
-            var products = _productManager.GetProducts();
-            var productList = products.Select(product => product.ToProductModel());
-                        
-            return View(productList);
+            var products = _productManager.GetProducts().ToModel();
+            return View(products);
         }
 
         public IActionResult FindById(int specific)
         {
             var model = _productManager.GetProductsByID(specific);
-            var productModel = model.ToProductModel();
+            var productModel = model.ToModel();
             if (productModel == null)
             {
                 return RedirectToAction("Products");

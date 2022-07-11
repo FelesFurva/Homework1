@@ -1,5 +1,4 @@
-﻿using DataAccess.Context.Entity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Extention;
 using OnlineStore.Models;
 using OnlineStoreServices.Managers;
@@ -27,7 +26,6 @@ namespace OnlineStore.Controllers
         public IActionResult ViewOrderDetailsById(int specific)
         {
             var order = _orderManager.GetOrderbyId(specific).ToViewModel();
-            //order.OrderedItems = _orderManager.GetOrderItems(specific).Select(o => o.ToViewModel());
             return View(order);
         }
 
@@ -35,18 +33,25 @@ namespace OnlineStore.Controllers
         {
             var userId = HttpContext.Session.GetId();
             var cart = _cartManager.GetUserCart(userId).ToModel();
-            var newOrder = new OrderViewModel
+            if(cart.Items == null)
             {
-                UserId = userId,
-                CreatedDate = DateTime.Now,
-                OrderTotalSum = cart.OrderTotal,
-                OrderedItems = cart.Items.ToOrderViewModel(),
-                
-            };
+                return View("Cart", "ViewCart");
+            }
+            if (ModelState.IsValid)
+            {
+                var newOrder = new OrderViewModel
+                {
+                    UserId = userId,
+                    CreatedDate = DateTime.Now,
+                    OrderTotalSum = cart.OrderTotal,
+                    OrderedItems = cart.Items.ToOrderViewModel(),
+                };
 
-            _orderManager.AddOrdertoDb(newOrder.ToEntity());
-            _cartManager.ClearCart(userId);
-            return RedirectToAction(nameof(ViewOrderHistory));
+                _orderManager.AddOrdertoDb(newOrder.ToEntity());
+                _cartManager.ClearCart(userId);
+                return RedirectToAction(nameof(ViewOrderHistory));
+            }
+            return View("Cart", "ViewCart");
         }
     }
 }

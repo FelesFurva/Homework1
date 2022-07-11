@@ -11,8 +11,13 @@ namespace OnlineStore.Extention
             {
                 CategoryId = category.CategoryId,
                 CategoryName = category.CategoryName,
-                SubCategories = category.SubCategory?.Select(subCategory => subCategory.ToSubCategoryModel())
+                SubCategories = category.SubCategory?.Select(subCategory => subCategory.ToModel())
             };
+        }
+
+        public static IEnumerable<CategoryModel> ToModel(this IEnumerable<Category> categories)
+        {
+            return categories.Select(category => category.ToModel());
         }
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using OnlineStoreServices.Managers;
-using DataAccess.Context.Entity;
 using OnlineStore.Extention;
 
 namespace OnlineStore.Controllers
@@ -13,7 +12,9 @@ namespace OnlineStore.Controllers
         private readonly ICategoryManager _categoryManager;
         private readonly IProductManager _productManager;
 
-        public HomeController(ICategoryManager categoryManager, ILogger<HomeController> logger, IProductManager productManager)
+        public HomeController(ICategoryManager categoryManager,
+                              ILogger<HomeController> logger,
+                              IProductManager productManager)
         {
             _categoryManager = categoryManager;
             _logger = logger;
@@ -24,14 +25,14 @@ namespace OnlineStore.Controllers
 
         public IActionResult Index(int selectedSubCategory = 1)
         { 
-            IEnumerable<Category> categories = _categoryManager.GetCategoriesWithSubs();
-            IEnumerable<Product> products = _productManager.GetProductsbySubCategory(selectedSubCategory);
+            IEnumerable<CategoryModel> categories = _categoryManager.GetCategoriesWithSubs().ToModel();
+            IEnumerable<ProductsModel> products = _productManager.GetProductsbySubCategory(selectedSubCategory).ToModel();
 
             var homeView = new HomeViewModel
             {
-                CategoriesList = categories.Select(categories => categories.ToModel()),
+                CategoriesList = categories,
 
-                Products = products.Select(products => products.ToProductModel()),
+                Products = products,
             };
            return View(homeView); 
         }
