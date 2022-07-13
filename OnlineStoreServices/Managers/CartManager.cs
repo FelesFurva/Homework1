@@ -26,7 +26,7 @@ namespace OnlineStoreServices.Managers
             return cart;
         }
 
-        public void AddCartItem(int UserId, int ProductId)
+        public void AddCartItem(int UserId, int ProductId, int quantity = 1)
         {
             var cart = _webShopDB.Cart.Include(c => c.Items).SingleOrDefault(c => c.UserId == UserId);
             var cartItem = cart.Items.FirstOrDefault(i => i.ProductId == ProductId);
@@ -36,7 +36,7 @@ namespace OnlineStoreServices.Managers
                 {
                     CartId = cart.CartId,
                     ProductId = ProductId,
-                    Quantity = 1,
+                    Quantity = quantity,
                 };
 
                 _webShopDB.Add(newCartItem);
@@ -44,7 +44,23 @@ namespace OnlineStoreServices.Managers
             }
             else
             {
-                cartItem.Quantity += 1;
+                cartItem.Quantity += quantity;
+                _webShopDB.SaveChanges();
+            }
+        }
+
+        public void RemoveCartItem(int userId, int ItemId)
+        {
+            var cart = GetCartItems(userId);
+            var cartItem = cart.SingleOrDefault(i => i.CartItemId == ItemId);
+            if (cartItem.Quantity > 1)
+            {
+                cartItem.Quantity -= 1;
+                _webShopDB.SaveChanges();
+            }
+            else
+            {
+                _webShopDB.CartItem.Remove(cartItem);
                 _webShopDB.SaveChanges();
             }
         }

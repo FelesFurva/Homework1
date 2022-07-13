@@ -28,6 +28,13 @@ namespace OnlineStore.Controllers
             _cartManager.AddCartItem(UserId, product);
             return Redirect(Request.Headers["Referer"].ToString());
         }
+
+        public IActionResult RemoveItem(int item)
+        {
+            var userId = HttpContext.Session.GetId();
+            _cartManager.RemoveCartItem(userId, item);
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
     }
 }
 

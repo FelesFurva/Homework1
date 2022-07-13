@@ -12,6 +12,7 @@
         <th>Price for 1 pc</th>
         <th>Quantity</th>
         <th>Total</th>
+        <th></th>
     </tr>
     @if(Model.Items?.Count() > 0)
     {
@@ -22,6 +23,8 @@
                 <td>@cartItem.Product.Price</td>
                 <td>@cartItem.Quantity</td>
                 <td>@cartItem.ProductTotal.ToString("N2")</td>
+                <td><a class="btn btn-dark small" asp-area="" asp-controller="Cart" asp-action="RemoveItem" asp-route-item=@cartItem.CartItemId>-</a>
+                <a class="btn btn-dark small" asp-area="" asp-controller="Cart" asp-action="AddToCart" asp-route-product=@cartItem.ProductId>+</a></td>
             </tr>
         }
     }
@@ -29,7 +32,7 @@
             <td colspan="3"><h5 style="text-align:right"> Order total sum:</h5></td>
             <td>@Model.OrderTotal</td>
         </tr>
-    </table>
+</table>
 
 <div class="container">
     <div>        
