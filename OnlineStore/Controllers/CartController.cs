@@ -22,10 +22,11 @@ namespace OnlineStore.Controllers
             return View(cart);
         }
 
-        public IActionResult AddToCart(int product)
+        public IActionResult AddToCart(int product, int quantity = 1)
         {
+            var itemQuantity = quantity;
             var UserId = HttpContext.Session.GetId();
-            _cartManager.AddCartItem(UserId, product);
+            _cartManager.AddCartItem(UserId, product, itemQuantity);
             return Redirect(Request.Headers["Referer"].ToString());
         }
 
