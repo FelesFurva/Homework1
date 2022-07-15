@@ -16,12 +16,20 @@ namespace OnlineStore.Controllers
 
         public IActionResult Categories()
         {
+            if (!HttpContext.Session.IsUserAdmin())
+            {
+                return RedirectToAction("LoginUser", "User");
+            }
             var categories = _categoryManager.GetCategories().ToModel();
             return View(categories);
         }
 
         public IActionResult FindByCategory(int specific)
         {
+            if(!HttpContext.Session.IsUserAdmin())
+            {
+                return RedirectToAction("LoginUser", "User");
+            }
             var subCategoriesbyCategory = _categoryManager.GetSubCategoryByCategoryId(specific).ToModel();
             return View(subCategoriesbyCategory);
         }
@@ -29,6 +37,10 @@ namespace OnlineStore.Controllers
         [HttpGet]
         public IActionResult CreateCategory()
         {
+            if (!HttpContext.Session.IsUserAdmin())
+            {
+                return RedirectToAction("LoginUser", "User");
+            }
             var category = new CategoryModel();
             return View(category);
         }
@@ -36,12 +48,16 @@ namespace OnlineStore.Controllers
         [HttpPost]
         public IActionResult CreateCategory(CategoryCreateModel category)
         {
-                if (ModelState.IsValid)
-                {
-                    _categoryManager.AddCategoryDB(category.CategoryName);
-                    return RedirectToAction("Categories");
-                }
-                return View(category);
+            if (!HttpContext.Session.IsUserAdmin())
+            {
+                return RedirectToAction("LoginUser", "User");
+            }
+            if (ModelState.IsValid)
+            {
+                _categoryManager.AddCategoryDB(category.CategoryName);
+                return RedirectToAction("Categories");
+            }
+            return View(category);
         }
     }
 }

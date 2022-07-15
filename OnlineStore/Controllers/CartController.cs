@@ -24,6 +24,10 @@ namespace OnlineStore.Controllers
 
         public IActionResult AddToCart(int product, int quantity = 1)
         {
+            if(!HttpContext.Session.IsLoggedIn())
+            {
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
             var itemQuantity = quantity;
             var UserId = HttpContext.Session.GetId();
             _cartManager.AddCartItem(UserId, product, itemQuantity);

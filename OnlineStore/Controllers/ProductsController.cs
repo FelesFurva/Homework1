@@ -20,6 +20,10 @@ namespace OnlineStore.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            if (!HttpContext.Session.IsUserAdmin())
+            {
+                return RedirectToAction("LoginUser", "User");
+            }
             var product = new ProductViewModel();
             product.SubCategories = _subCategoryManager.GetSubCategories().ToModel();
             return View(product);
@@ -28,6 +32,10 @@ namespace OnlineStore.Controllers
         [HttpPost]
         public IActionResult Create(ProductCreateModel product)
         {
+            if (!HttpContext.Session.IsUserAdmin())
+            {
+                return RedirectToAction("LoginUser", "User");
+            }
             var viewModel = new ProductViewModel();
             viewModel.SubCategories = _subCategoryManager.GetSubCategories().ToModel();
 
@@ -63,12 +71,20 @@ namespace OnlineStore.Controllers
 
         public IActionResult Products()
         {
+            if (!HttpContext.Session.IsUserAdmin())
+            {
+                return RedirectToAction("LoginUser", "User");
+            }
             var products = _productManager.GetProducts().ToModel();
             return View(products);
         }
 
         public IActionResult FindById(int specific)
         {
+            if (!HttpContext.Session.IsUserAdmin())
+            {
+                return RedirectToAction("LoginUser", "User");
+            }
             var model = _productManager.GetProductsByID(specific);
             var productModel = model.ToModel();
             if (productModel == null)

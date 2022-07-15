@@ -8,5 +8,6 @@
         public string Password { get; set; }
         public Cart Cart { get; set; }
         public IEnumerable<Order> Orders { get; set; }
+        public Role Role { get; set; }
     }
 }

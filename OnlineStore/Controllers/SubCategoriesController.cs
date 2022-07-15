@@ -18,6 +18,10 @@ namespace OnlineStore.Controllers
 
         public IActionResult SubCategories()
         {
+            if (!HttpContext.Session.IsUserAdmin())
+            {
+                return RedirectToAction("LoginUser", "User");
+            }
             var subCategories = _subCategoryManager.GetSubCategories().ToModel();
             return View(subCategories);
         }
@@ -25,6 +29,10 @@ namespace OnlineStore.Controllers
         [HttpGet]
         public IActionResult CreateSubCategory()
         {
+            if (!HttpContext.Session.IsUserAdmin())
+            {
+                return RedirectToAction("LoginUser", "User");
+            }
             var subCategory = new SubCategoryViewModel();
             subCategory.Categories = _categoryManager.GetCategories().ToModel();
             return View(subCategory);
@@ -33,6 +41,10 @@ namespace OnlineStore.Controllers
         [HttpPost]
         public IActionResult CreateSubCategory(SubCategoryCreateModel subCategory)
         {
+            if (!HttpContext.Session.IsUserAdmin())
+            {
+                return RedirectToAction("LoginUser", "User");
+            }
             var viewModel = new SubCategoryViewModel();
             viewModel.Categories = _categoryManager.GetCategories().ToModel();
             
@@ -51,6 +63,10 @@ namespace OnlineStore.Controllers
 
         public IActionResult FindBySubCategory(int specific)
         {
+            if (!HttpContext.Session.IsUserAdmin())
+            {
+                return RedirectToAction("LoginUser", "User");
+            }
             var productsbyCategory = _subCategoryManager.GetItemsBySubCategoryId(specific).ToModel();
             return View(productsbyCategory);
         }
