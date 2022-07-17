@@ -3,46 +3,37 @@ using DataAccess.Context.Entity;
 
 namespace OnlineStoreServices.Managers
 {
-    public class UserManager : IUserManager
+     public class UserManager : IUserManager
     {
-        private readonly WebShopDBContext _webShopDB;
+        private readonly IWebShop _webShopDB;
 
-        public UserManager(WebShopDBContext webShopDB)
+        public UserManager(IWebShop webShopDB)
         {
             _webShopDB = webShopDB;
         }
 
         public void AddUserToDB(User newUser)
         {
-            newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
-
-            _webShopDB.User.Add(newUser);
-            _webShopDB.SaveChanges();
-
-            var cart = new Cart
+            if(newUser == null)
             {
-                UserId = newUser.UserId,
-            };
-
-            _webShopDB.Cart.Add(cart);
+                throw new ArgumentNullException(nameof(newUser));
+            }
+            newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
+            _webShopDB.User.Add(newUser);
             _webShopDB.SaveChanges();
         }
 
         public User GetUser(string Email, string password)
         {
-            var user = _webShopDB.User.FirstOrDefault(u => u.Email == Email);
-            bool verifiedPassword = BCrypt.Net.BCrypt.Verify(password, user.Password);
-            if (verifiedPassword)
+            if(_webShopDB.User.FirstOrDefault(u => u.Email == Email) is User user
+                && BCrypt.Net.BCrypt.Verify(password, user.Password))
             {
                 return user;
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
-        public bool CheckIfEmailIsAvailable(string email)
+        public bool CheckIfEmailIsTaken(string email)
         {
             return _webShopDB.User.FirstOrDefault(u => u.Email == email) != null;
         }

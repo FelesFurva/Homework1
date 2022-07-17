@@ -6,6 +6,6 @@ namespace OnlineStoreServices.Managers
     {
         void AddUserToDB(User newUser);
         User GetUser(string Email, string password);
-        bool CheckIfEmailIsAvailable(string email);
+        bool CheckIfEmailIsTaken(string email);
     }
 }

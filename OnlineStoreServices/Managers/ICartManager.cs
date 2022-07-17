@@ -9,5 +9,6 @@ namespace OnlineStoreServices.Managers
         Cart GetUserCart(int userId);
         void ClearCart(int userId);
         void RemoveCartItem(int userId, int ItemId);
+        void AddCartToDB(int userId);
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Context
 {
-    public class WebShopDBContext : DbContext
+    public class WebShopDBContext : DbContext, IWebShop
     {
         public WebShopDBContext(DbContextOptions<WebShopDBContext> options) : base(options)
         {

@@ -6,11 +6,22 @@ namespace OnlineStoreServices.Managers
 {
     public class CartManager : ICartManager
     {
-        private readonly WebShopDBContext _webShopDB;
+        private readonly IWebShop _webShopDB;
 
-        public CartManager(WebShopDBContext webShopDB)
+        public CartManager(IWebShop webShopDB)
         {
             _webShopDB = webShopDB;
+        }
+
+        public void AddCartToDB(int userId)
+        {
+            var cart = new Cart
+            {
+                UserId = userId,
+            };
+
+            _webShopDB.Cart.Add(cart);
+            _webShopDB.SaveChanges();
         }
 
         public IEnumerable<CartItem> GetCartItems(int userId)
@@ -38,8 +49,7 @@ namespace OnlineStoreServices.Managers
                     ProductId = ProductId,
                     Quantity = quantity,
                 };
-
-                _webShopDB.Add(newCartItem);
+                _webShopDB.CartItem.Add(newCartItem);
                 _webShopDB.SaveChanges();
             }
             else

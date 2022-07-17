@@ -19,6 +19,7 @@ builder.Services.AddScoped<ISubCategoryManager, SubCategoryManager>();
 builder.Services.AddScoped<IUserManager, UserManager>();
 builder.Services.AddScoped<ICartManager, CartManager>();
 builder.Services.AddScoped<IOrderManager, OrderManager > ();
+builder.Services.AddScoped<IWebShop, WebShopDBContext>();
 builder.Services.AddDbContext<WebShopDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebShopDb"));

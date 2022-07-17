@@ -8,10 +8,12 @@ namespace OnlineStore.Controllers
     public class UserController : Controller
     {
         private readonly IUserManager _userManager;
+        private readonly ICartManager _cartManager;
 
-        public UserController(IUserManager userManager)
+        public UserController(IUserManager userManager, ICartManager cartManager)
         {
             _userManager = userManager;
+            _cartManager = cartManager;
         }
 
         [HttpGet]
@@ -30,12 +32,14 @@ namespace OnlineStore.Controllers
 
             if (ModelState.IsValid)
             {
-                if (_userManager.CheckIfEmailIsAvailable(user.Email))
+                if (_userManager.CheckIfEmailIsTaken(user.Email))
                 {
                     ModelState.AddModelError("email", $"E-mail: {user.Email} is taken");
                     return View();
                 }
-                _userManager.AddUserToDB(user.ToEntity());
+                var userForDb = user.ToEntity();
+                _userManager.AddUserToDB(userForDb);
+                _cartManager.AddCartToDB(userForDb.UserId);
                 return RedirectToAction("LoginUser");
             }
             return View(user);
